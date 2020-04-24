@@ -4,6 +4,7 @@ Helping functions for snakes.
 
 import numpy as np
 import scipy.interpolate
+from collections import deque
 
 def distribute_points(snake):
     """ Distributes snake points equidistantly."""
@@ -100,12 +101,12 @@ def curve_contour(snake, mask_shape):
         mask[idx[:,0],idx[:,1]] = True
     return mask
 
-def fill_contour(mask, seed):
+def fill_contour(mask, seed, value=True):
     queue = deque([seed])
     while(queue):
         pt = queue.popleft()
-        if(mask[pt[0],pt[1]] != True):
-            mask[pt[0],pt[1]] = True
+        if(mask[pt[0],pt[1]] != value):
+            mask[pt[0],pt[1]] = value
             # add neighbours to queue
             queue.append( (pt[0] - 1, pt[1]) )
             queue.append( (pt[0] + 1, pt[1]) )
